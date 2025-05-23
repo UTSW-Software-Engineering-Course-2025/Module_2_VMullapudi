@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Course Setup Instructions
 
 ## Part 1: Setup Git Repository:
@@ -200,3 +201,6 @@ You are now ready to complete the tasks for this block of the assignment! Puttin
 
 ![Settings](./img/setup_vscodeextensions_3.png)
 
+=======
+# Module_2_VMullapudi
+>>>>>>> 178d4183f908cf0e85bcd1ba559a6086c0b55e87
