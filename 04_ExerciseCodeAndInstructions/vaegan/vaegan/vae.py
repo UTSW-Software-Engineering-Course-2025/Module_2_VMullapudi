@@ -587,7 +587,7 @@ class ConditionalVAE(VAE):
         self.n_classes = n_classes
 
         # 2. Now call the base class init, passing it all of the relevant fields that it expects as arguments.
-        #    Hint its generally wise to pass through any arguments sent to the derived clas __init__()  to the base class __init__().
+        #    Hint its generally wise to pass through any arguments sent to the derived class __init__()  to the base class __init__().
         super().__init__(
             n_latent_dims=n_latent_dims,
             image_shape=image_shape,
