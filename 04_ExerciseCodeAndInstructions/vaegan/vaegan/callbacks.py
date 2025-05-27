@@ -32,7 +32,7 @@ class GenerateImages(Callback):
         self.cmap = cmap
         self.n_generated_images = n_generated_images
         self.n_latent_dims = n_latent_dims
-        self.model = model
+        self._model = model
 
     def on_epoch_end(self, epoch, logs=None):
         """Overrides the on_epoch_end method of the superclass Callback. Here,
@@ -75,6 +75,15 @@ class GenerateImages(Callback):
 
         # Close the figure so it doesn't render on screen
         plt.close(fig)
+
+    @property
+    def model(self):
+        """get the model object."""
+        return self._model
+
+    @model.setter
+    def model(self, model):
+        self._model = model
 
 
 class SaveImages(Callback):
