@@ -11,12 +11,16 @@ def build_new_dictionary_from_input(dIn):
     Returns:
         updated dictionary
     """
-    nTotal = 0
-    for key in dIn.keys():
-        nTotal += dIn[key]
-    #Adding total to the dictionary
-    dIn['Total'] = nTotal
-    return dIn
+    # nTotal = 0
+    # for key in dIn.keys():
+    #     nTotal += dIn[key]
+    # #Adding total to the dictionary
+    # dIn['Total'] = nTotal
+    
+    # Just get every (k,v) pair from input and add the total value
+    # This wont work with nested dictionaries - use copy.deepcopy for that
+    return {**dIn, 'Total': sum(dIn.values())}
+    ##return dIn
 
 dOuput = {}
 dInput = {'A':1,

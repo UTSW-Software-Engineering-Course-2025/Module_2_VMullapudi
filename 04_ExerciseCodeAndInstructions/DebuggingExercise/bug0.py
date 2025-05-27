@@ -1,21 +1,22 @@
 #bug 0, cause an exception to when run
-def fReplaceText(strInput, strText, intStart, intStop):
+def fReplaceText(strInput: str, strText: str, intStart: int, intStop: int) -> str:
     """
     Replace the text between intStart and intStop with strText
     """
     #copy the string
     strReturn = strInput[:]
-    #update the section of the string with inputted text
-    strReturn[intStart:intStop] = strText
+    # update the section of the string with inputted text
+    strReturn = strReturn[:intStart] + strText + strReturn[intStop:]
     return strReturn
 
-def fFindAndReplaceInStr(strInput, strOld, strNew):
+def fFindAndReplaceInStr(strInput: str, strOld: str, strNew: str) -> str:
     """
     replace strOld with strNew in strInput
     """
     intLenOld = len(strOld)
     intStart = strInput.find(strOld)
-    fReplaceText(strInput, strNew, intStart, intStart+intLenOld)
+    # Add return here
+    return fReplaceText(strInput, strNew, intStart, intStart+intLenOld)
 
 
 #fix famous misquote

@@ -10,10 +10,12 @@ def del_odd_number(list_of_numbers):
     Returns:
         updated list with no odd number
     """
-    for idx in range(len(list_of_numbers)):
-        if list_of_numbers[idx]%2:
-            del list_of_numbers[idx]
-    return list_of_numbers
+    # Modifying iterable while iterating over can lead to indexing issues.
+    # for idx in range(len(list_of_numbers)):
+    #     if list_of_numbers[idx]%2:
+    #         del list_of_numbers[idx]
+    return [i for i in list_of_numbers if i % 2 == 0]
+    #return list_of_numbers
 
 list_of_numbers = list(range(10))
 print('Input list:  ', list_of_numbers)
