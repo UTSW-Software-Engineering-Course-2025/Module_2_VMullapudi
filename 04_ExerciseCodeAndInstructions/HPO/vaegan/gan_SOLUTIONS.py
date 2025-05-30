@@ -86,7 +86,7 @@ class Generator(tf.keras.Model):
                                   self.image_shape[1] // (2 ** n_strided_layers),
                                   n_first_layer_filters)
         
-        dense_neurons = np.product(first_conv_input_shape)
+        dense_neurons = np.prod(first_conv_input_shape)
         
         # Parse activation function lists for 
         self.generator_conv_layer_activation_functions = fParseActivationFunctions(generator_conv_layer_activation_functions)

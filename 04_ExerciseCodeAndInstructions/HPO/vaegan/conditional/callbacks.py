@@ -117,7 +117,7 @@ class SaveImagesConditional(Callback):
         self.n_classes = example_labels.shape[1]
         self.n_generated_images = n_generated_images
         self.n_latent_dims = n_latent_dims
-        self.model = model
+        self._model = model
         self.class_names = class_names
         
         self.images_tensor = tf.convert_to_tensor(self.example_images, dtype=tf.float32)
@@ -208,3 +208,12 @@ class SaveImagesConditional(Callback):
         # Close the figures so they don't render on screen
         plt.close(fig)
         plt.close(fig2)
+    
+    @property
+    def model(self):
+        """get the model object."""
+        return self._model
+
+    @model.setter
+    def model(self, model):
+        self._model = model
