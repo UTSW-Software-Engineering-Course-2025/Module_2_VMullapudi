@@ -393,16 +393,17 @@ class ConditionalVAECGAN(ConditionalVAEGAN):
                 + class_loss_all * self.cond_loss_weight - auth_loss * self.adv_loss_weight
                        
         # Compute the gradients for each loss wrt their respectively model weights
-        grads_enc = gt.gradient(encoder_loss, self.encoder.trainable_weights)
-        grads_dec = gt.gradient(decoder_loss, self.decoder.trainable_weights)
-        grads_disc = gt.gradient(disc_loss, self.discriminator.trainable_weights)
+        grads_enc = gt.gradient(encoder_loss, self.encoder.trainable_variables)
+        grads_dec = gt.gradient(decoder_loss, self.decoder.trainable_variables)
+        grads_disc = gt.gradient(disc_loss, self.discriminator.trainable_variables)
         
         # Apply the gradient descent steps to each submodel. The optimizer
         # attribute is created when model.compile(optimizer) is called by the
         # user.
-        self.optimizer.apply_gradients(zip(grads_enc, self.encoder.trainable_weights))
-        self.optimizer.apply_gradients(zip(grads_dec, self.decoder.trainable_weights))
-        self.optimizer.apply_gradients(zip(grads_disc, self.discriminator.trainable_weights))           
+        self.optimizer.build(self.trainable_variables)
+        self.optimizer.apply_gradients(zip(grads_enc, self.encoder.trainable_variables))
+        self.optimizer.apply_gradients(zip(grads_dec, self.decoder.trainable_variables))
+        self.optimizer.apply_gradients(zip(grads_disc, self.discriminator.trainable_variables))           
         
         # Update the running means of the losses
         self.loss_recon_tracker.update_state(recon_loss)

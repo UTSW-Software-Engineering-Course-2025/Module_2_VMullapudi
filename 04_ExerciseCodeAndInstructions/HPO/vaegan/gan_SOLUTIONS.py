@@ -670,6 +670,7 @@ class ConditionalGAN(GAN):
             labels_gen = tf.ones((2 * n_samples, 1))
             gen_loss_adv = self.loss_bce(labels_gen, labels_pred)
             # Compute loss between discriminator-predicted classes and the desired classes
+            class_random = tf.ensure_shape(class_random, [None, self.n_classes])
             gen_loss_class = self.loss_class(class_random, class_pred)
             # Add losses
             gen_loss = gen_loss_adv + self.cond_loss_weight * gen_loss_class

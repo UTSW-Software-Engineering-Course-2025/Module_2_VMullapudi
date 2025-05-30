@@ -565,11 +565,9 @@ class ConditionalGAN(GAN):
             labels_pred, class_pred = self.discriminator(images_disc, training=True)
 
             # Compute discriminator loss for distinguishing real/fake images
-            disc_loss_adv = self.loss_bce(labels_disc, labels_pred)
-            # Compute discriminator loss for predicting image class, for real images only
-            disc_loss_class = self.loss_class(class_real, class_pred[:n_samples, :])
-            # Add losses
-            disc_loss = disc_loss_adv + disc_loss_class
+            disc_loss = self.loss_bce(labels_disc, labels_pred)
+            # Add discriminator loss for predicting image class, for real images only
+            disc_loss += self.loss_class(class_real, class_pred[:n_samples, :])
 
             # Compute classification metric
             self.metric_class.update_state(class_real, class_pred[:n_samples, :])
@@ -577,7 +575,7 @@ class ConditionalGAN(GAN):
         # Compute the gradient of the lost wrt the discriminator weights
         grads_disc = gt.gradient(disc_loss, self.discriminator.trainable_weights)
 
-        # Apply the weight updates
+        # Apply weight updates
         self.optimizer_disc.apply_gradients(
             zip(grads_disc, self.discriminator.trainable_weights)
         )
@@ -600,11 +598,9 @@ class ConditionalGAN(GAN):
             # calculate the loss between these predictions and the "real image"
             # labels
             labels_gen = tf.ones((2 * n_samples, 1))
-            gen_loss_adv = self.loss_bce(labels_gen, labels_pred)
+            gen_loss = self.loss_bce(labels_gen, labels_pred)
             # Compute loss between discriminator-predicted classes and the desired classes
-            gen_loss_class = self.loss_class(class_random, class_pred)
-            # Add losses
-            gen_loss = gen_loss_adv + self.cond_loss_weight * gen_loss_class
+            gen_loss += self.loss_class(class_random, class_pred)
 
         # Compute the gradient of the lost wrt the generator weights
         grads_gen = gt2.gradient(gen_loss, self.generator.trainable_weights)
